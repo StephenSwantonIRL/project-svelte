@@ -11,13 +11,14 @@ export class BackEndService {
         if (userCredentials) {
             const savedUser = JSON.parse(userCredentials);
             userStore.set({
-                firstName: savedUser.firstName,
-                lastName: savedUser.lastName,
+                firstname: savedUser.firstname,
+                lastname: savedUser.lastname,
                 email: savedUser.email,
-                _id: savedUser._id,
+                userid: savedUser.userid,
                 token: savedUser.token,
 
             });
+            console.log(userStore)
             axios.defaults.headers.common["Authorization"] = "Bearer " + savedUser.token;
         }
     }
@@ -29,39 +30,43 @@ export class BackEndService {
             // eslint-disable-next-line dot-notation
             axios.defaults.headers.common["Authorization"] = `Bearer ${response.data.token}`;
             if (response.data.success) {
+                console.log(user.email)
                 const userDetails = await axios.post(`${this.backEndUrl}/api/users/find`, {email: user.email});
+                console.log("attempting to retrieve user details")
+                console.log(userDetails)
                 userStore.set({
-                    firstName: userDetails.data.firstName,
-                    lastName: userDetails.data.lastName,
+                    firstname: userDetails.data.firstname,
+                    lastname: userDetails.data.lastname,
                     email: userDetails.data.email,
-                    _id: userDetails.data._id,
+                    userid: userDetails.data.userid,
                     token: response.data.token,
                 });
                 localStorage.currentUser = JSON.stringify({
-                    firstName: userDetails.data.firstName,
-                    lastName: userDetails.data.lastName,
+                    firstname: userDetails.data.firstname,
+                    lastname: userDetails.data.lastname,
                     email: userDetails.data.email,
-                    _id: userDetails.data._id,
+                    userid: userDetails.data.userid,
                     token: response.data.token,
                 });
+                console.log(userStore)
                 return true;
             }
             return false;
         } catch (error) {
+            console.log("false due to error")
             return false;
         }
     }
 
-    async logout() {
+    async logout(token) {
         // eslint-disable-next-line dot-notation
-        console.log(userStore);
-        const res = await axios.post(`${this.backEndUrl}/api/revokeToken`,);
+        const res = await axios.post(`${this.backEndUrl}/api/revokeToken`, {token : token} );
         axios.defaults.headers.common["Authorization"] = "";
         userStore.set({
-            firstName: "",
-            lastName: "",
+            firstname: "",
+            lastname: "",
             email: "",
-            _id: "",
+            userid: "",
             token: "",
         });
         localStorage.removeItem("currentUser");

@@ -3,18 +3,16 @@
   import {push} from "svelte-spa-router";
   import {getContext} from "svelte";
 
-  import github from "../../assets/GitHub_Logo.png";
-
   const backEndService = getContext("BackEndService")
 
-  let firstName = "";
-  let lastName = "";
+  let firstname = "";
+  let lastname = "";
   let email = ""
   let password = "";
   let errorMessage = "";
 
   async function signup() {
-    let success = await backEndService.createUser({firstName, lastName, email, password})
+    let success = await backEndService.createUser({firstname, lastname, email, password})
     if (success) {
       push("/");
     } else {
@@ -33,10 +31,10 @@
     <div class="field is-horizontal">
       <div class="field-body">
         <div class="field">
-          <input class="input" bind:value={firstName} type="text" placeholder="Enter first name" name="firstName">
+          <input class="input" bind:value={firstname} type="text" placeholder="Enter first name" name="firstName">
         </div>
         <div class="field">
-          <input class="input" bind:value={lastName} type="text" placeholder="Enter last name" name="lastName">
+          <input class="input" bind:value={lastname} type="text" placeholder="Enter last name" name="lastName">
         </div>
       </div>
     </div>
@@ -47,7 +45,7 @@
       <label class="label">Password</label> <input class="input" bind:value={password} type="password" placeholder="Enter Password" name="password">
     </div>
     <div class="field is-grouped">
-      <button id="submit" class="button is-link">Submit</button>  <a href="{backEndService.backEndUrl}/auth" id="github" class="button is-inverted is-link">Sign up with </a>
+      <button id="submit" class="button is-link">Submit</button>  <a href="{backEndService.backEndUrl}/google" id="github" class="button is-inverted is-link">Sign up with </a>
     </div>
   </form>
 </section>

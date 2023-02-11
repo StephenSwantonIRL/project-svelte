@@ -2,13 +2,14 @@
     import Brand from "./Brand.svelte";
     import {getContext} from "svelte";
     import {push} from "svelte-spa-router";
+    import {userStore} from "../stores/user.js";
 
     export let isAdmin;
 
     const backendService = getContext("BackEndService");
 
     async function logout() {
-        const logout = await backendService.logout();
+        const logout = await backendService.logout($userStore.token);
         if (logout) {
             push("/login");
         }

@@ -4,7 +4,7 @@
     import {getContext} from "svelte";
     import WelcomeMenu from "../../components/WelcomeMenu.svelte";
 
-    const placeMarkService = getContext("PlaceMarkService");
+    const backEndService = getContext("BackEndService");
 
     export let params;
 
@@ -27,7 +27,7 @@
     let errorMessage;
 
     async function signup() {
-        let success = await placeMarkService.createUser(user)
+        let success = await backEndService.createUser(user)
         if (success) {
             login()
         } else {
@@ -36,7 +36,7 @@
     }
 
     async function login() {
-        let success = await placeMarkService.authenticate({email: user.email, password: user.password})
+        let success = await backEndService.authenticate({email: user.email, password: user.password})
         console.log("login function")
         console.log(success)
         if (success) {

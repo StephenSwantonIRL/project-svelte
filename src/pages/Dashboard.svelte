@@ -7,7 +7,7 @@
     const backEndService = getContext("BackEndService");
 
     async function checkAdmin(){
-        const response = await backEndService.getUser($userStore._id);
+        const response = await backEndService.getUser($userStore.userid);
         return Boolean(response.isAdmin);
     }
 
@@ -26,6 +26,6 @@
 <Menu bind:isAdmin={adminValue} />
 
 <section class="section header">
-    <h1 class="title is-3">Dashboard</h1>
+    <h1 class="title is-3">Dashboard - </h1>
 </section>
 

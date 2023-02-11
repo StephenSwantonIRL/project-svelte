@@ -17,7 +17,8 @@
     import NotFound from "./pages/NotFound.svelte";
 
     const title = "App";
-    setContext("BackEndService", new BackEndService("<!-- toplevel >"));
+    setContext("BackEndService", new BackEndService("http://localhost:4000"));
+    //setContext("BackEndService", new BackEndService("https://inquis.glitch.me"));
 
 
 

@@ -3,6 +3,7 @@
     import {push} from "svelte-spa-router";
     import {BackEndService} from "../../services/backend-service.js";
     import {getContext} from "svelte";
+    import {userStore} from "../../stores/user.js"
 
     const backEndService = getContext("BackEndService")
     let email = ""
@@ -15,6 +16,7 @@
         console.log(success)
         if (success) {
             console.log("success")
+            console.log($userStore)
             push("/dashboard");
         } else {
             email = "";
