@@ -15,6 +15,7 @@
     import OAuth from "./pages/OAuth.svelte";
     import EditUser from "./pages/EditUser.svelte";
     import NotFound from "./pages/NotFound.svelte";
+    import Invite from "./pages/Invite.svelte";
 
     const title = "App";
     setContext("BackEndService", new BackEndService("http://localhost:4000"));
@@ -28,6 +29,7 @@
         "/": Index,
         "/signup": SignUp,
         "/login": Login,
+        "/invite/:id/:key": Invite,
         "/dashboard": wrap({
             component: Dashboard,
             conditions: [

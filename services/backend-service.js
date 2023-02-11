@@ -106,5 +106,13 @@ export class BackEndService {
         return true;
     }
 
+    async validateEmail(id, key) {
+        const res = await axios.get(`${this.backEndUrl}/invite/${id}/${key}`);
+        if (res.data != true) {
+            return false;
+        };
+        return true;
+    }
+
 
 };
