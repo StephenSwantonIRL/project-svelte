@@ -43,6 +43,7 @@
             <button id="submit" class="button is-link">Submit</button> <a href="{backEndService.backEndUrl}/auth" id="github" class="button is-inverted is-link">Log in with </a>
 
         </div>
+        <div><a href="/#/forgotPassword">Forgot Password?</a></div>
     </form>
 </section>
 {#if errorMessage}

@@ -16,6 +16,8 @@
     import EditUser from "./pages/EditUser.svelte";
     import NotFound from "./pages/NotFound.svelte";
     import Invite from "./pages/Invite.svelte";
+    import ForgotPassword from "./pages/ForgotPassword.svelte";
+    import ResetPassword from "./pages/ResetPassword.svelte";
 
     const title = "App";
     setContext("BackEndService", new BackEndService("http://localhost:4000"));
@@ -29,6 +31,7 @@
         "/": Index,
         "/signup": SignUp,
         "/login": Login,
+        "/forgotPassword": ForgotPassword,
         "/invite/:id/:key": Invite,
         "/dashboard": wrap({
             component: Dashboard,
@@ -54,6 +57,7 @@
             ]
         }),
         "/auth/:id/:token": OAuth,
+        "/reset/:id/:key": ResetPassword,
         "/github/:data": EditUser,
         "*": NotFound,
 

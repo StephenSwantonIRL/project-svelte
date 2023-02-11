@@ -114,5 +114,31 @@ export class BackEndService {
         return true;
     }
 
+    async validateResetLink(id, key) {
+        const res = await axios.get(`${this.backEndUrl}/reset/${id}/${key}`);
+        if (res.data != true) {
+            return false;
+        };
+        return true;
+    }
+
+    async resetPassword(id, key, password) {
+        const res = await axios.post(`${this.backEndUrl}/reset/${id}/${key}`, { password: password });
+        if (res.data != true) {
+            return false;
+        };
+        return true;
+    }
+
+
+    async requestPasswordReset(email) {
+        const res = await axios.post(`${this.backEndUrl}/reset`, { email : email });
+        console.log(res.data)
+        if (res.data != true) {
+            return false;
+        };
+        return true;
+    }
+
 
 };
