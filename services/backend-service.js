@@ -141,4 +141,37 @@ export class BackEndService {
     }
 
 
+    async deleteAllSessions() {
+        const res = await axios.delete(`${this.backEndUrl}/api/sessions`);
+        return res.data;
+    }
+
+    async getAllSessions() {
+        const res = await axios.get(`${this.backEndUrl}/api/sessions`);
+        return res.data;
+    }
+
+    async createSession(session) {
+        const res = await axios.post(`${this.backEndUrl}/api/sessions`, session);
+        return res.data;
+    }
+
+    async getSessionById(id) {
+        const res = await axios.get(`${this.backEndUrl}/api/sessions/${id}`);
+        return res.data;
+    }
+
+    async getSessionByUser(id) {
+        const res = await axios.post(`${this.backEndUrl}/api/sessions/find`, {userid: id} );
+        return res.data;
+    }
+
+    async deleteSessionById(id) {
+        console.log(id)
+        const res = await axios.delete(`${this.backEndUrl}/api/sessions/${id}`);
+        return res.data;
+    }
+
+
+
 };

@@ -18,6 +18,7 @@
     import Invite from "./pages/Invite.svelte";
     import ForgotPassword from "./pages/ForgotPassword.svelte";
     import ResetPassword from "./pages/ResetPassword.svelte";
+    import EditSession from "./pages/EditSession.svelte";
 
     const title = "App";
     setContext("BackEndService", new BackEndService("http://localhost:4000"));
@@ -59,6 +60,7 @@
         "/auth/:id/:token": OAuth,
         "/reset/:id/:key": ResetPassword,
         "/github/:data": EditUser,
+        "/edit/:id": EditSession,
         "*": NotFound,
 
     }

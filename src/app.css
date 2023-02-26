@@ -13,3 +13,11 @@
 .cs-submitable {
     @apply w-full inline-block px-6 py-3 mb-4 text-sm text-white font-bold leading-loose bg-gray-500 hover:bg-gray-600 rounded transition duration-200
 }
+
+.cs-main {
+    @apply flex flex-col justify-center lg:w-3/4 mx-auto
+}
+
+.cs-h2 {
+    @apply text-4xl mb-2 leading-tight font-semibold
+}
