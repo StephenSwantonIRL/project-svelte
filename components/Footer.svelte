@@ -2,7 +2,7 @@
     let logo = "assets/logos/inquisitlogo320.png"
     let reversedLogo = "assets/logos/reversedlogo.png"
 </script>
-<div class="container">
+<div class="">
 <footer class="py-10 bg-gray-500">
     <div class="container px-4 mx-auto text-center">
 
