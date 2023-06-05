@@ -7,21 +7,24 @@
     import {Button, Label, Select} from "flowbite-svelte";
     import Toggle from "../../components/Toggle.svelte"
     import { NumberInput, Textarea } from 'flowbite-svelte'
-
+    import QuestionFileUpload from "../../components/QuestionFileUpload.svelte";
 
     export let params
+    export let question =""
     let id = params.id
-    export let images
-    export let imagesInput
-    let question = {
+    let selectedTime;
+    let timeInput;
+    let selectedOrder;
+
+    $: question = {
         type: "open",
-        question: "",
+        question: question.question,
         image: "https://image.com",
-        sessionorder: 0,
-        timetoanswer: 120,
+        sessionorder: selectedOrder ? selectedOrder: 0,
+        timetoanswer: calculateTime(),
         sessionid: id
     }
-    let container
+
     const backEndService = getContext("BackEndService");
     async function checkAdmin() {
         const response = await backEndService.getUser($userStore.userid)
@@ -37,12 +40,13 @@
     $: adminValue = {isAdmin}['isAdmin']
 
     async function addQuestion() {
-        console.log(question.question)
+        console.log(question)
+        question.timetoanswer = calculateTime()
         await backEndService.createQuestion(question
             )
 
     }
-    let selectedOrder;
+
     let orderOptions = [
         {value: 0, name: 0},
         {value: 1, name: 1},
@@ -57,24 +61,12 @@
         {value: "minutes", name: "minutes"},
     ]
 
-    let selectedTime;
-    let timeInput;
-
-
-    function uploadImage() {
-        const formData = new FormData();
-        const fileInput = document.querySelector(".file-input");
-        formData.append('imagefile', fileInput.files[0]);
-
-        backEndService.uploadImage(formData)
-            .then((data) => {
-                images.push(data.url);
-                images = images;
-                imagesInput = imagesInput + data.url + ",";
-                imagesInput = imagesInput;
-            })
-            .catch(error => console.log(error));
-
+    function calculateTime() {
+        if(selectedTime ==="minutes"){
+            return timeInput * 60;
+        } else {
+            return timeInput;
+        }
     }
 
 </script>
@@ -92,26 +84,11 @@
                 <label> Question Prompt</label><br>
                 <Textarea width="800px" bind:value={question.question}></Textarea>
                 </div>
-                <div class="card-content">
-                    <div bind:this={container} id="image-container">
-                        {#if images}
-                            {#each images as image}
-                                <img id="{image}" src="{image}" width="30%"
-                                     style="padding-left:10px"/>
-                            {/each}
-                        {/if}
-                    </div>
-
-                    <div id="file-select" class="file has-name is-fullwidth">
-                        <label class="file-label"> Do you want to add an image? <input class="file-input" type="file" accept="image/png, image/jpeg">
-                        </label>
-                        <Button style="margin-left:10px;" on:click={uploadImage} class="button is-primary ">Upload</Button>
-                    </div>
-                </div>
+                <QuestionFileUpload/>
                 Type? Short Answer <Toggle checked={true}/> Long Answer <br>
                 <label>Where do you want this question to appear?</label><br>
                 <Select items={orderOptions} bind:value={selectedOrder}></Select><br/>
-                <label>Close Question after: <div><NumberInput> bind:value={timeInput}</NumberInput><Select items={timeOptions} bind:value={selectedTime}></Select></div> </label>
+                <label>Close Question after: <div><NumberInput bind:value={timeInput}></NumberInput><Select items={timeOptions} bind:value={selectedTime}></Select></div> </label>
                 <Button on:click={addQuestion}>Submit</Button>
             </form>
         </div>
