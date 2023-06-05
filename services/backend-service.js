@@ -173,5 +173,32 @@ export class BackEndService {
     }
 
 
+    async createQuestion(question) {
+        const res = await axios.post(`${this.backEndUrl}/api/questions`, question);
+        return res.data;
+    }
+
+    async getQuestionById(id) {
+        const res = await axios.get(`${this.backEndUrl}/api/questions/${id}`);
+        return res.data;
+    }
+
+
+    async getQuestionsBySession(id) {
+        const res = await axios.post(`${this.backEndUrl}/api/questions/find`, id);
+        return res.data;
+    }
+
+
+    async deleteQuestionById(sessionId, questionId) {
+        const res = await axios.delete(`${this.backEndUrl}/api/sessions/${sessionId}/${questionId}`);
+        return res.data;
+    }
+
+    async uploadImage(options) {
+        const res = await axios.post(`${this.backEndUrl}/api/question/uploadimage`, options);
+        return res.data;
+    }
+
 
 };
