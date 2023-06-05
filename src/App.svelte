@@ -19,7 +19,8 @@
     import ForgotPassword from "./pages/ForgotPassword.svelte";
     import ResetPassword from "./pages/ResetPassword.svelte";
     import EditSession from "./pages/EditSession.svelte";
-    import AddQuestion from "./pages/AddQuestion.svelte";
+    import AddQuestionOpenEnded from "./pages/AddQuestionOpenEnded.svelte";
+    import AddQuestionMCQ from "./pages/AddQuestionMCQ.svelte";
 
     const title = "App";
     setContext("BackEndService", new BackEndService("http://localhost:4000"));
@@ -62,8 +63,8 @@
         "/reset/:id/:key": ResetPassword,
         "/github/:data": EditUser,
         "/edit/:id": EditSession,
-        "/:id/add-open-question": AddQuestion,
-        "/:id/add-mcq": AddQuestion,
+        "/:id/add-open-question": AddQuestionOpenEnded,
+        "/:id/add-mcq": AddQuestionMCQ,
         "*": NotFound,
 
     }

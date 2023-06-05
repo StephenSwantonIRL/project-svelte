@@ -1,10 +1,10 @@
 
 <script>
     export let checked;
-
+    export let onclick;
 </script>
 <label class="switch">
-    <input {checked} type="checkbox">
+    <input on:click={onclick} {checked} type="checkbox">
     <span class="slider round"></span>
 </label>
 
