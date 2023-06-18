@@ -178,6 +178,12 @@ export class BackEndService {
         return res.data;
     }
 
+    async createMCQQuestion(questionElements) {
+        const res = await axios.post(`${this.backEndUrl}/api/questions/mcq`, questionElements);
+        return res.data;
+    }
+
+
     async getQuestionById(id) {
         const res = await axios.get(`${this.backEndUrl}/api/questions/${id}`);
         return res.data;

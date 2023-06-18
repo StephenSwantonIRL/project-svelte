@@ -27,6 +27,7 @@
     }
 
     let mcqOptions =  ["",""]
+    let correctOptions = []
 
     const backEndService = getContext("BackEndService");
     async function checkAdmin() {
@@ -45,8 +46,17 @@
     async function addQuestion() {
         console.log(question)
         question.timetoanswer = calculateTime()
-        await backEndService.createQuestion(question
+        let response = await backEndService.createQuestion(question
             )
+        console.log(response.questionid)
+        let mcqSpecificQuestionElements = {
+            questionid: response.questionid,
+            sessionid: response.sessionid,
+            options: mcqOptions,
+            correctanswer: correctOptions
+        }
+        console.log(mcqSpecificQuestionElements)
+        await backEndService.createMCQQuestion(mcqSpecificQuestionElements)
 
     }
 
@@ -76,6 +86,7 @@
 
     function addMCQOption() {
         mcqOptions = [...mcqOptions, ""]
+        console.log(mcqOptions)
     }
 
     function toggleTrueFalse() {
@@ -83,9 +94,25 @@
         if(trueFalse===true) {
             mcqOptions = ["True", "False"]
         }
+        correctOptions = []
     }
 
     $: questionContainer = trueFalse ? questionContainer : questionContainer
+
+    function updateMCQoption(index, value) {
+        mcqOptions[index] = value
+        console.log(mcqOptions)
+    }
+
+    function updateCorrectAnswers(value, isCorrect) {
+        if(correctOptions.includes(value) && !isCorrect) {
+            correctOptions.splice(correctOptions.indexOf(value),1)
+        }
+        if(!correctOptions.includes(value) && isCorrect){
+            correctOptions = [ ...correctOptions, value ]
+        }
+        console.log(correctOptions)
+    }
 
 </script>
 <Menu bind:isAdmin={adminValue}/>
@@ -107,25 +134,25 @@
 
                 <div bind:this={questionContainer}>
                     {#if trueFalse}
-                        <MCQOption order="1" value="True" disabled="true"></MCQOption>
-                        <MCQOption order="2" value="False" disabled="true"></MCQOption>
+                        <MCQOption order="1" value="True" disabled="true"  index=0 update={updateMCQoption} correct=false updateCorrect={updateCorrectAnswers}/>
+                        <MCQOption order="2" value="False" disabled="true" index=1 update={updateMCQoption} correct=false updateCorrect={updateCorrectAnswers}/>
                     {:else}
                         {#each mcqOptions as option , index }
-                            <MCQOption order={index+1} value={option}></MCQOption>
+                            <MCQOption order={index+1} bind:value={mcqOptions[index]} index={index} update={updateMCQoption} correct=false updateCorrect={updateCorrectAnswers} />
                         {/each}
                     {/if}
 
                     {#if mcqOptions.length ===0 }
-                        <MCQOption order="1" value=""></MCQOption>
-                        <MCQOption order="2" value=""></MCQOption>
+                        <MCQOption order="1" bind:value={mcqOptions[0]} index=0 update={updateMCQoption} correct=false updateCorrect={updateCorrectAnswers}/>
+                        <MCQOption order="2" bind:value={mcqOptions[1]} index=1 update={updateMCQoption} correct=false updateCorrect={updateCorrectAnswers}/>
                     {/if}
 
                     <Button on:click={addMCQOption}>Add New Option</Button>
                 </div>
 
                 <label>Where do you want this question to appear?</label><br>
-                <Select items={orderOptions} bind:value={selectedOrder}></Select><br/>
-                <label>Close Question after: <div><NumberInput bind:value={timeInput}></NumberInput><Select items={timeOptions} bind:value={selectedTime}></Select></div> </label>
+                <Select items={orderOptions} bind:value={selectedOrder}/><br/>
+                <label>Close Question after: <div><NumberInput bind:value={timeInput}/><Select items={timeOptions} bind:value={selectedTime}/></div> </label>
                 <Button on:click={addQuestion}>Submit</Button>
             </form>
         </div>
