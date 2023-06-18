@@ -184,6 +184,12 @@ export class BackEndService {
     }
 
 
+    async createOpenEndedQuestion(questionElements) {
+        const res = await axios.post(`${this.backEndUrl}/api/questions/open-ended`, questionElements);
+        return res.data;
+    }
+
+
     async getQuestionById(id) {
         const res = await axios.get(`${this.backEndUrl}/api/questions/${id}`);
         return res.data;

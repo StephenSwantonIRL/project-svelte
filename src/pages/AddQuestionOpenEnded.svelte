@@ -42,9 +42,20 @@
     async function addQuestion() {
         console.log(question)
         question.timetoanswer = calculateTime()
-        await backEndService.createQuestion(question
+        const response = await backEndService.createQuestion(question
             )
-
+        let openType
+        if(trueFalse === true) {
+            openType= "long"
+        } else {
+            openType = "short"
+        }
+        let openEndedSpecificQuestionElements = {
+            questionid: response.questionid,
+            sessionid: response.sessionid,
+            type: openType,
+        }
+        await backEndService.createOpenEndedQuestion(openEndedSpecificQuestionElements)
     }
 
     let orderOptions = [
@@ -69,6 +80,8 @@
         }
     }
 
+    let trueFalse = true;
+
 </script>
 <Menu bind:isAdmin={adminValue}/>
 
@@ -85,7 +98,7 @@
                 <Textarea width="800px" bind:value={question.question}></Textarea>
                 </div>
                 <QuestionFileUpload/>
-                Type? Short Answer <Toggle checked={true}/> Long Answer <br>
+                Type? Short Answer <Toggle bind:checked={trueFalse}/> Long Answer <br>
                 <label>Where do you want this question to appear?</label><br>
                 <Select items={orderOptions} bind:value={selectedOrder}></Select><br/>
                 <label>Close Question after: <div><NumberInput bind:value={timeInput}></NumberInput><Select items={timeOptions} bind:value={selectedTime}></Select></div> </label>
