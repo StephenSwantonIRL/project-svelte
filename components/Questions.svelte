@@ -45,7 +45,7 @@ function addQuestion(event){
 
 async function deleteQuestion(event) {
     if (event.detail?.save) {
-        await backEndService.deleteQuestionById(deleteModal)
+        await backEndService.deleteQuestionById(session.sessionid, deleteModal)
         sessionQuestions = await backEndService.getQuestionsBySession(session.sessionid)
     }
     deleteModal = ""
@@ -60,18 +60,16 @@ async function deleteQuestion(event) {
             <p><a on:click={addQuestion} class="fa-regular fa-circle-plus">Add Question</a><i class="fa-regular fa-circle-plus"></i></p>
 
             {#await sessionQuestions then sessionQuestion}
+
                 {#if sessionQuestion.length === 0}
                     <p class="mb-2 text-lg text-gray-500 leading-relaxed">Lorem ipsum dolor sit amet consectetur adipisicing
                         elit. Ea sit eaque totam aliquid veritatis assumenda temporibus harum unde!</p>
                 {/if}
 
-                {#each sessionQuestions as question, i}
+                {#each sessionQuestion as question, i}
                     <div class="flex flex-row justify-between" >
                         <div>
-                            {question.title}
-                        </div>
-                        <div>
-                            <a>Control Centre </a>
+                            {question.question}
                         </div>
                         <div>
                             <a href="/#/edit/{session.sessionid}/{question.questionid}" > Edit</a>

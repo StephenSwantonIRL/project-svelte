@@ -178,11 +178,20 @@ export class BackEndService {
         return res.data;
     }
 
+    async editQuestion(question) {
+        const res = await axios.post(`${this.backEndUrl}/api/questions/${question.questionid}/edit`, question);
+        return res.data;
+    }
+
     async createMCQQuestion(questionElements) {
         const res = await axios.post(`${this.backEndUrl}/api/questions/mcq`, questionElements);
         return res.data;
     }
 
+    async editMCQQuestion(questionElements) {
+        const res = await axios.post(`${this.backEndUrl}/api/questions/mcq/${questionElements.questionid}/edit`, questionElements);
+        return res.data;
+    }
 
     async createOpenEndedQuestion(questionElements) {
         const res = await axios.post(`${this.backEndUrl}/api/questions/open-ended`, questionElements);
@@ -197,13 +206,18 @@ export class BackEndService {
 
 
     async getQuestionsBySession(id) {
-        const res = await axios.post(`${this.backEndUrl}/api/questions/find`, id);
+        const res = await axios.post(`${this.backEndUrl}/api/questions/find`, {sessionid:id});
         return res.data;
     }
 
 
     async deleteQuestionById(sessionId, questionId) {
         const res = await axios.delete(`${this.backEndUrl}/api/sessions/${sessionId}/${questionId}`);
+        return res.data;
+    }
+
+    async getMCQOptionsById(id) {
+        const res = await axios.get(`${this.backEndUrl}/api/questions/mcq/${id}`);
         return res.data;
     }
 
