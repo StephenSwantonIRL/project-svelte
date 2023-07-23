@@ -22,6 +22,7 @@
     import AddQuestionOpenEnded from "./pages/AddQuestionOpenEnded.svelte";
     import AddQuestionMCQ from "./pages/AddQuestionMCQ.svelte";
     import EditMCQQuestion from "./pages/EditMCQQuestion.svelte";
+    import EditOpenQuestion from "./pages/EditOpenQuestion.svelte";
 
     const title = "App";
     setContext("BackEndService", new BackEndService("http://localhost:4000"));
@@ -66,7 +67,8 @@
         "/edit/:id": EditSession,
         "/:id/add-open-question": AddQuestionOpenEnded,
         "/:id/add-mcq": AddQuestionMCQ,
-        "/edit/:id/:questionid": EditMCQQuestion,
+        "/edit/:id/mcq/:questionid": EditMCQQuestion,
+        "/edit/:id/open/:questionid": EditOpenQuestion,
         "*": NotFound,
 
     }

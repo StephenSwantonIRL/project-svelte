@@ -198,6 +198,10 @@ export class BackEndService {
         return res.data;
     }
 
+    async editOpenEndedQuestion(questionElements) {
+        const res = await axios.post(`${this.backEndUrl}/api/questions/open-ended/${questionElements.questionid}/edit`, questionElements);
+        return res.data;
+    }
 
     async getQuestionById(id) {
         const res = await axios.get(`${this.backEndUrl}/api/questions/${id}`);
@@ -218,6 +222,11 @@ export class BackEndService {
 
     async getMCQOptionsById(id) {
         const res = await axios.get(`${this.backEndUrl}/api/questions/mcq/${id}`);
+        return res.data;
+    }
+
+    async getOpenEndedById(id) {
+        const res = await axios.get(`${this.backEndUrl}/api/questions/open-ended/${id}`);
         return res.data;
     }
 

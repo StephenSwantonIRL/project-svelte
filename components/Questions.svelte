@@ -72,7 +72,7 @@ async function deleteQuestion(event) {
                             {question.question}
                         </div>
                         <div>
-                            <a href="/#/edit/{session.sessionid}/{question.questionid}" > Edit</a>
+                            <a href="/#/edit/{session.sessionid}/{question.type}/{question.questionid}" > Edit</a>
                         </div>
                         <div>
                             <a on:click={() => openDeleteModal(question.questionid)}>Delete</a>
