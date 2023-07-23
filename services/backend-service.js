@@ -161,6 +161,11 @@ export class BackEndService {
         return res.data;
     }
 
+    async assignShortCode(shortCode, sessionId) {
+        const res = await axios.post(`${this.backEndUrl}/api/sessions/${sessionId}/shortcode/assign`, {shortCode});
+        return res.data;
+    }
+
     async getSessionByUser(id) {
         const res = await axios.post(`${this.backEndUrl}/api/sessions/find`, {userid: id} );
         return res.data;
