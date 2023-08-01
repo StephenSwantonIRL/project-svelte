@@ -2,17 +2,18 @@
     import {getContext} from "svelte";
 
     const backEndService = getContext("BackEndService")
-
-    let waitMessage
+    
     export let session
 
     let shortcode = session.shortcode
+    let waitMessage = session.waitmessage
+
     async function updateShortCode(shortcodeValue, sessionId){
         await backEndService.assignShortCode(shortcodeValue, sessionId)
     }
 
     async function updateWaitMessage(waitMessageValue, sessionId){
-        console.log(waitMessageValue)
+        await backEndService.assignWaitMessage(waitMessageValue, sessionId)
     }
 </script>
 <div class="cs-main">

@@ -166,6 +166,11 @@ export class BackEndService {
         return res.data;
     }
 
+    async assignWaitMessage(waitMessage, sessionId) {
+        const res = await axios.post(`${this.backEndUrl}/api/sessions/${sessionId}/wait-message/assign`, {waitMessage});
+        return res.data;
+    }
+
     async getSessionByUser(id) {
         const res = await axios.post(`${this.backEndUrl}/api/sessions/find`, {userid: id} );
         return res.data;
