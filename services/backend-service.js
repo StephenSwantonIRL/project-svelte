@@ -171,6 +171,11 @@ export class BackEndService {
         return res.data;
     }
 
+    async changeSessionStatus(status, sessionId) {
+        const res = await axios.post(`${this.backEndUrl}/api/sessions/${sessionId}/status/assign`, {status});
+        return res.data;
+    }
+
     async getSessionByUser(id) {
         const res = await axios.post(`${this.backEndUrl}/api/sessions/find`, {userid: id} );
         return res.data;

@@ -1,12 +1,19 @@
 <script>
     import {getContext} from "svelte";
+    import Toggle from "./Toggle.svelte";
 
     const backEndService = getContext("BackEndService")
-    
+
     export let session
 
     let shortcode = session.shortcode
     let waitMessage = session.waitmessage
+    let trueFalse
+    if(session.status == "inactive"){
+        trueFalse = false
+    } else {
+        trueFalse = true
+    }
 
     async function updateShortCode(shortcodeValue, sessionId){
         await backEndService.assignShortCode(shortcodeValue, sessionId)
@@ -14,6 +21,18 @@
 
     async function updateWaitMessage(waitMessageValue, sessionId){
         await backEndService.assignWaitMessage(waitMessageValue, sessionId)
+    }
+
+    async function toggleStatus() {
+        trueFalse = !trueFalse;
+        let status
+        if(trueFalse){
+            status = "active"
+        } else {
+            status = "inactive"
+        }
+        await backEndService.changeSessionStatus(status,session.sessionid)
+
     }
 </script>
 <div class="cs-main">
@@ -25,6 +44,6 @@
         <div>
             Waiting Page Message: <textarea class="cs-text-field" style="width:50%" bind:value={waitMessage} placeholder="xys" onfocusout={updateWaitMessage(waitMessage, session.sessionid)} />
         </div>
-
+        <Toggle onclick={toggleStatus} bind:checked={trueFalse}/>
     </section>
 </div>

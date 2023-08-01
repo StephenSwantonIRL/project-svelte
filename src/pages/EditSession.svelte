@@ -20,6 +20,7 @@ async function getSession(id) {
 let session
 
 $: session = getSession(id).then((x) => {
+    console.log(x)
     return x
 })
 
