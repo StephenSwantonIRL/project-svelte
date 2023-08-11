@@ -187,6 +187,10 @@ export class BackEndService {
         return res.data;
     }
 
+    async setActiveQuestion(questionid, sessionid){
+        const res = await axios.post(`${this.backEndUrl}/api/sessions/${sessionid}/active/`, {questionid});
+        return res.data
+    }
 
     async createQuestion(question) {
         const res = await axios.post(`${this.backEndUrl}/api/questions`, question);

@@ -1,9 +1,11 @@
 <script>
 
-import Modal from "./Modal.svelte"
-import {getContext} from "svelte"
-import {push} from "svelte-spa-router";
-export let session;
+    import Modal from "./Modal.svelte"
+    import {getContext} from "svelte"
+    import {push} from "svelte-spa-router";
+    import {Radio} from 'flowbite-svelte'
+
+    export let session;
 
 const backEndService = getContext("BackEndService")
 let deleteModal
@@ -11,8 +13,7 @@ let showModal = false
 let questionType = ""
 
 async function getSessionQuestions(sessionId){
-    const result =  await backEndService.getQuestionsBySession(sessionId)
-    return result
+    return await backEndService.getQuestionsBySession(sessionId)
 }
 
 let sessionQuestions = getSessionQuestions(session.sessionid)
@@ -42,6 +43,11 @@ function addQuestion(event){
 
 
 }
+
+async function setActiveQuestion(questionid, sessionid){
+    await backEndService.setActiveQuestion(questionid, sessionid)
+}
+
 
 async function deleteQuestion(event) {
     if (event.detail?.save) {
@@ -76,6 +82,9 @@ async function deleteQuestion(event) {
                         </div>
                         <div>
                             <a on:click={() => openDeleteModal(question.questionid)}>Delete</a>
+                        </div>
+                        <div>
+                            <Radio name="question" on:click={setActiveQuestion(question.questionid, session.sessionid)} />
                         </div>
                     </div>
                 {/each}

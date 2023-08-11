@@ -9,7 +9,7 @@
             <form action="#">
                 <div class="flex max-w-md">
 
-                    <span class="font-heading w-full pl-3 py-3">https://inquis.it/</span>
+                    <span class="font-heading w-full pl-3 py-3">https://inquis.it/#/</span>
                     <input class="w-full pl-3 py-3 mr-2 bg-white rounded" type="text" placeholder="Enter it here"><button class="inline-block px-6 py-2 text-sm text-white font-bold leading-loose bg-gray-600 hover:bg-gray-700 rounded transition duration-200">Join</button>
                 </div>
             </form>
