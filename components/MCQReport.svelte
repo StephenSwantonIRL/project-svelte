@@ -2,6 +2,7 @@
 import MCQResponses from "./MCQResponses.svelte";
 
 export let question
+
 </script>
 <div class="cs-main">
     <section class="">

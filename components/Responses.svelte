@@ -7,7 +7,6 @@
     export let activeQ
     let initialLoad = 1
     export let activeQuestionId
-
     const backEndService = getContext("BackEndService")
     $: activeQuestionInitial = backEndService.getQuestionById(activeQ).then((x) => { console.log(x); return x})
     $: activeQuestion = backEndService.getQuestionById(activeQuestionId).then((x) => { initialLoad = 2; console.log(x);return x})
@@ -16,16 +15,15 @@
 {#if initialLoad ===1 }
     {#await activeQuestionInitial then activeQ}
         {#if activeQ.type=="mcq"}
-            <MCQReport question={activeQ}  />
+            <MCQReport question={activeQ} session={session} />
         {:else if activeQ.type==="open"}
-            <OpenEndedReport question={activeQ}  />
+            <OpenEndedReport question={activeQ} session={session} />
         {:else}
 
         {/if}
 
     {/await}
 {/if}
-
 
 {#await activeQuestion then activeQ}
     {#if activeQ.type=="mcq"}
@@ -35,5 +33,4 @@
     {:else}
 
     {/if}
-
 {/await}

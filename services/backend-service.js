@@ -83,6 +83,11 @@ export class BackEndService {
         return res.data;
     }
 
+    async getAnonUser(id) {
+        const res = await axios.get(`${this.backEndUrl}/api/anon/${id}`);
+        return res.data;
+    }
+
     async getUserByEmail(email) {
         const res = await axios.post(`${this.backEndUrl}/api/users/find`, {email: email});
         return res.data;
@@ -140,16 +145,6 @@ export class BackEndService {
         return true;
     }
 
-
-    async deleteAllSessions() {
-        const res = await axios.delete(`${this.backEndUrl}/api/sessions`);
-        return res.data;
-    }
-
-    async getAllSessions() {
-        const res = await axios.get(`${this.backEndUrl}/api/sessions`);
-        return res.data;
-    }
 
     async createSession(session) {
         const res = await axios.post(`${this.backEndUrl}/api/sessions`, session);
@@ -254,6 +249,14 @@ export class BackEndService {
         const res = await axios.get(`${this.backEndUrl}/api/questions/open-ended/${id}`);
         return res.data;
     }
+
+
+    async getResponsesByQuestion(id) {
+        const res = await axios.post(`${this.backEndUrl}/api/responses/find`, {questionid:id});
+        return res.data;
+    }
+
+
 
     async uploadImage(options) {
         const res = await axios.post(`${this.backEndUrl}/api/question/uploadimage`, options);
