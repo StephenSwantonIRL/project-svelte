@@ -8,14 +8,24 @@ import Title from "../../components/Title.svelte";
 import Questions from "../../components/Questions.svelte";
 import SessionSettings from "../../components/SessionSettings.svelte";
 import {utils as socketListeners} from "../../utils/socket-utils.js"
+import Responses from "../../components/Responses.svelte";
 
 const backEndService = getContext("BackEndService");
 export let params
 let id = params.id
 
-const socket = io("http://localhost:4001");
+let responseReload = 0
 
-socketListeners(socket)
+const socket = io("http://localhost:4001");
+let socketActions = {
+    updateResponses: function (){
+        responseReload += 1
+    }
+}
+socketListeners(socket, id, socketActions)
+
+
+
 
 async function getSession(id) {
     const response = await backEndService.getSessionById(id);
@@ -42,12 +52,14 @@ let adminCheck = checkAdmin().then((x) => {
 let adminValue
 $: adminValue = {isAdmin}['isAdmin']
 
-
 </script>
 <Menu bind:isAdmin={adminValue}/>
 {#await session then session}
     <Title title="{session.title}"/>
-    <Questions session={session}/>
+    <Questions session={session} socket={socket}/>
     <SessionSettings session="{session}"/>
 {/await}
+{#if responseReload}
+    <Responses reload={responseReload} />
+{/if}
 <Footer/>

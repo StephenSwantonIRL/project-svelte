@@ -1,6 +1,8 @@
 
-export function utils(socket){
-    socket.on('Hi back at you', function (msg) {
-        console.log("hi back received")
+export function utils(socket, sessionId, actions) {
+
+    socket.on((`${sessionId}-response`), function (msg){
+        actions.updateResponses()
     })
+
 }
