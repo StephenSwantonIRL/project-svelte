@@ -4,13 +4,17 @@ import Modal from "./Modal.svelte"
 import {getContext} from "svelte"
 import {push} from "svelte-spa-router";
 import {Radio} from 'flowbite-svelte'
+import { createEventDispatcher } from 'svelte';
 
+const dispatch = createEventDispatcher();
 export let session;
 export let socket;
 const backEndService = getContext("BackEndService")
 let deleteModal
 let showModal = false
 let questionType = ""
+
+let activeQuestion
 
 async function getSessionQuestions(sessionId){
     return await backEndService.getQuestionsBySession(sessionId)
@@ -45,7 +49,7 @@ function addQuestion(event){
 }
 
 async function setActiveQuestion(questionid, sessionid){
-    await backEndService.setActiveQuestion(questionid, sessionid)
+    activeQuestion = backEndService.setActiveQuestion(questionid, sessionid).then((x) => {    dispatch("active-question", x.activequestion)})
     socket.emit("active question", sessionid)
 }
 

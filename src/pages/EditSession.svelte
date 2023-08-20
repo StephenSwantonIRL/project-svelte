@@ -14,7 +14,8 @@ const backEndService = getContext("BackEndService");
 export let params
 let id = params.id
 
-let responseReload = 0
+let responseReload = 1
+let activeQuestion = backEndService.getSessionActiveQuestion(id).then((x) => { console.log(x.activequestion); return x.activequestion } )
 
 const socket = io("http://localhost:4001");
 let socketActions = {
@@ -52,14 +53,22 @@ let adminCheck = checkAdmin().then((x) => {
 let adminValue
 $: adminValue = {isAdmin}['isAdmin']
 
+function updateResponse(event){
+    activeQuestion = event.detail
+    responseReload +=1
+}
+
 </script>
 <Menu bind:isAdmin={adminValue}/>
 {#await session then session}
     <Title title="{session.title}"/>
-    <Questions session={session} socket={socket}/>
+    <Questions on:active-question={updateResponse} session={session} socket={socket}/>
     <SessionSettings session="{session}"/>
+    {#if responseReload}
+        {#await activeQuestion then activeQ}
+        <Responses bind:reload={responseReload} session={session} bind:activeQuestionId={activeQuestion} activeQ={activeQ} />
+            {/await}
+    {/if}
 {/await}
-{#if responseReload}
-    <Responses reload={responseReload} />
-{/if}
+
 <Footer/>
