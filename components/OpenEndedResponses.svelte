@@ -5,7 +5,7 @@
     export let question
     export let session
     const backEndService = getContext("BackEndService")
-    $: responses = backEndService.getResponsesByQuestion(question.questionid).then((x) => { console.log(x); return x})
+    $: responses = backEndService.getResponsesByQuestion(question.questionid, "open").then((x) => { console.log(x); return x})
 
 </script>
 {#await responses then responses}

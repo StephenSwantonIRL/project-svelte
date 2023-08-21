@@ -21,6 +21,11 @@
         responseValue = response.openendedresponsevalue
     }
 
+    if(type==="mcq"){
+        responseValue = ""
+        response.values.forEach((value) => responseValue = responseValue+" "+value.value)
+    }
+
     let time = (Date.parse(response.responsetime) - Date.parse(session.activequestionstarttime))/1000
     let unit = "seconds"
     if(time>(60*60)){

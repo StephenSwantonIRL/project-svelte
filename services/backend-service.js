@@ -251,8 +251,8 @@ export class BackEndService {
     }
 
 
-    async getResponsesByQuestion(id) {
-        const res = await axios.post(`${this.backEndUrl}/api/responses/find`, {questionid:id});
+    async getResponsesByQuestion(id, type) {
+        const res = await axios.post(`${this.backEndUrl}/api/responses/find`, {questionid:id, type: type});
         return res.data;
     }
 

@@ -27,9 +27,9 @@
 
 {#await activeQuestion then activeQ}
     {#if activeQ.type=="mcq"}
-        <MCQReport question={activeQ}  />
+        <MCQReport question={activeQ} session={session} />
     {:else if activeQ.type==="open"}
-        <OpenEndedReport question={activeQ}  />
+        <OpenEndedReport question={activeQ} session={session} />
     {:else}
 
     {/if}

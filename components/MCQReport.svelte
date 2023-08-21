@@ -2,7 +2,7 @@
 import MCQResponses from "./MCQResponses.svelte";
 
 export let question
-
+export let session
 </script>
 <div class="cs-main">
     <section class="">
@@ -10,6 +10,6 @@ export let question
             <h2 class="text-4xl mb-2 leading-tight font-semibold font-heading">Responses</h2>
         </div>
         <p><b>{question.question}</b></p>
-        <MCQResponses question={question} />
+        <MCQResponses question={question} session={session} />
     </section>
 </div>
