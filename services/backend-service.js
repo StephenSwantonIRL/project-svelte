@@ -256,7 +256,10 @@ export class BackEndService {
         return res.data;
     }
 
-
+    async generateWordCloud(responses){
+        const res = await axios.post(`${this.backEndUrl}/api/wordcloud`, {responses:responses});
+        return res.data;
+    }
 
     async uploadImage(options) {
         const res = await axios.post(`${this.backEndUrl}/api/question/uploadimage`, options);

@@ -1,11 +1,12 @@
 <script>
     import IndividualResponse from "./IndividualResponse.svelte";
-    import {getContext} from "svelte";
+    import {createEventDispatcher, getContext} from "svelte";
 
     export let question
     export let session
+    const dispatch = createEventDispatcher()
     const backEndService = getContext("BackEndService")
-    $: responses = backEndService.getResponsesByQuestion(question.questionid, "open").then((x) => { console.log(x); return x})
+    $: responses = backEndService.getResponsesByQuestion(question.questionid, "open").then((x) => { dispatch("responses", x); return x})
 
 </script>
 {#await responses then responses}
