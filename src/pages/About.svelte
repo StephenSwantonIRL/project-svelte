@@ -1,0 +1,3 @@
+<section class="section">
+  <h1> About Page Example </h1>
+</section>
