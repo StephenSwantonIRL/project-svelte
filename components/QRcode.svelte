@@ -1,5 +1,4 @@
 <script>
-    import "qrious"
     import {onMount} from "svelte";
     export let destination
     export const getQRscript = async (destination) => {
